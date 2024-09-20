@@ -1,0 +1,41 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Food Menu</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    {% include 'navbar.html' %}
+
+    <div class="container">
+        <h1>Food Menu</h1>
+
+        <!-- 搜索表单 -->
+        <form method="GET" action="{% url 'food_menu' %}">
+            <input type="text" name="q" placeholder="Search food..." value="{{ request.GET.q }}">
+            <button type="submit">Search</button>
+        </form>
+
+        <!-- 显示食物列表 -->
+        <div class="food-list">
+            {% for food in food_items %}
+            <div class="food-item">
+                <h2>{{ food.name }}</h2>
+                <img src="{{ food.image.url }}" alt="{{ food.name }}" width="200">
+                <p>{{ food.description }}</p>
+                <p>Price: ${{ food.price }}</p>
+            </div>
+            {% empty %}
+            <p>No food items available.</p>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>Restaurant Management System &copy; 2024</p>
+    </div>
+</body>
+</html>

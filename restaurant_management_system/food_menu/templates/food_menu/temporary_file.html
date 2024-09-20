@@ -1,0 +1,48 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Temporary File</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    {% include 'navbar.html' %}
+
+    <div class="container">
+        <h1>Temporary File</h1>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Food Name</th>
+                    <th>Description</th>
+                    <th>Price</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for food in hidden_food_items %}
+                <tr>
+                    <td>{{ food.name }}</td>
+                    <td>{{ food.description }}</td>
+                    <td>{{ food.price }}</td>
+                    <td>
+                        <a href="{% url 'restore_food' food.id %}">Restore</a>  <!-- 恢复食物 -->
+                        <a href="{% url 'delete_food_permanently' food.id %}" onclick="return confirm('Are you sure you want to permanently delete this food?');">Delete Permanently</a>  <!-- 永久删除食物 -->
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="4">No hidden food items found.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="footer">
+        <p>Restaurant Management System &copy; 2024</p>
+    </div>
+</body>
+</html>

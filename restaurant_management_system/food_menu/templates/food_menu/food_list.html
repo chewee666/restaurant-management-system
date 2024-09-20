@@ -1,0 +1,55 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Food List</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    {% include 'navbar.html' %}
+    <a href="{% url 'temporary_file' %}" class="button">View Temporary File</a>  <!-- 进入临时文件的按钮 -->
+
+    <div class="container">
+        <h1>Food List</h1>
+
+        <!-- 搜索表单 -->
+        <form method="GET" action="{% url 'food_list' %}">
+            <input type="text" name="q" placeholder="Search food..." value="{{ request.GET.q }}">
+            <button type="submit">Search</button>
+        </form>
+
+        <!-- 批量操作表单 -->
+        <form method="POST" action="{% url 'bulk_delete' %}">
+            {% csrf_token %}
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Select</th>
+                        <th>Food Name</th>
+                        <th>Description</th>
+                        <th>Price</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for food in food_items %}
+                    <tr>
+                        <td><input type="checkbox" name="selected_items" value="{{ food.id }}"></td>
+                        <td>{{ food.name }}</td>
+                        <td>{{ food.description }}</td>
+                        <td>{{ food.price }}</td>
+                        <td>
+                            <a href="{% url 'edit_food' food.id %}">Edit</a>
+                            <a href="{% url 'hide_food' food.id %}">Delete to Temp</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <button type="submit">Delete Selected</button>
+        </form>
+    </div>
+</body>
+</html>

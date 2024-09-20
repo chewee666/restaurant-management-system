@@ -1,0 +1,20 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Owner Dashboard</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    {% include 'navbar.html' %}
+    <a href="{% url 'add_food' %}" class="button">Add Food</a>
+    <div class="container">
+        <h1>Owner Dashboard</h1>
+        <p>Welcome, {{ user.username }}!</p>
+
+        <a href="{% url 'food_list' %}" class="button">Manage Food List</a>  <!-- 食物列表管理按钮 -->
+    </div>
+</body>
+</html>

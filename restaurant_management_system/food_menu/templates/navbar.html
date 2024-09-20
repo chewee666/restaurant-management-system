@@ -1,0 +1,17 @@
+<nav>
+    <ul>
+        <li><a href="{% url 'home' %}">Home</a></li>
+
+        <!-- 顾客视角的 Food Menu，公开页面 -->
+        <li><a href="{% url 'food_menu' %}">Food Menu</a></li>
+
+        {% if user.is_authenticated %}
+            <!-- 仅 Owner 可见的 Food List 和 Dashboard -->
+            <li><a href="{% url 'food_list' %}">Food List (Admin)</a></li>
+            <li><a href="{% url 'owner_dashboard' %}">Owner Dashboard</a></li>
+            <li><a href="{% url 'owner_logout' %}">Logout</a></li>
+        {% else %}
+            <li><a href="{% url 'owner_login' %}">Owner Login</a></li>
+        {% endif %}
+    </ul>
+</nav>

@@ -1,0 +1,50 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Food</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    {% include 'navbar.html' %}
+    <div class="header">
+        <h1>Edit Food Item</h1>
+    </div>
+
+    <div class="container">
+        <form method="POST" enctype="multipart/form-data">  <!-- 添加 enctype 来支持文件上传 -->
+            {% csrf_token %}
+            <label for="name">Food Name:</label>
+            <input type="text" id="name" name="name" value="{{ food.name }}" required>
+
+            <label for="description">Description:</label>
+            <textarea id="description" name="description" required>{{ food.description }}</textarea>
+
+            <label for="price">Price:</label>
+            <input type="number" id="price" name="price" value="{{ food.price }}" required>
+
+            <label for="current_image">Current Image:</label>
+            <div>
+                <img src="{{ food.image.url }}" alt="{{ food.name }}" width="150">
+            </div>
+
+            <label for="image">Change Image:</label>
+            <input type="file" id="image" name="image">
+
+            <button type="submit">Save Changes</button>
+        </form>
+    </div>
+
+    <div class="footer">
+        <p>Restaurant Management System &copy; 2024</p>
+    </div>
+</body>
+</html>
+
+{% if food.image %}
+    <img src="{{ food.image.url }}" alt="{{ food.name }}" width="150">
+{% else %}
+    <p>No image available</p>
+{% endif %}

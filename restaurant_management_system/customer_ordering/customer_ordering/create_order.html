@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Order</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <h2>Create an Order</h2>
+    <form method="POST">
+        {% csrf_token %}
+        <label for="food_items">Select Food Items:</label><br>
+        {% for food in food_items %}
+            <input type="checkbox" name="food_items" value="{{ food.id }}">{{ food.name }}<br>
+        {% endfor %}
+
+        <label for="special_requirement">Special Requirement:</label><br>
+        <textarea name="special_requirement" id="special_requirement"></textarea><br>
+
+        <button type="submit">Submit Order</button>
+    </form>
+</body>
+</html>
